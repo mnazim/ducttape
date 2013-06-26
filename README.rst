@@ -13,14 +13,10 @@ Installation
 Install using `pip`
 ::
 
-    pip install git+git@github.com:mnazim/ducttape.git#egg_name=ducttape
-
-Q
-Usage
-=====
+    pip install git+https://github.com/mnazim/ducttape.git
 
 Quick Start
------------
+===========
 
 Follow the commands::
 
@@ -45,7 +41,7 @@ available inside templates automatically.
 
 
 ``watch`` monitors template files for changes and automatically rebuilds site as
-needed.
+needed::
 
     $ ducttape watch
     Watching...

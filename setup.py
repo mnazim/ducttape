@@ -10,9 +10,7 @@ setup(
     zip_safe = True,
     scripts = [],
 
-    # Project uses reStructuredText, so ensure that the docutils get
-    # installed or upgraded on the target machine
-    install_requires = [],
+    install_requires = ['Django', 'watchdog'],
 
     entry_points = {
         'console_scripts': [
@@ -21,7 +19,6 @@ setup(
     },
 
     package_data = {
-        # If any package contains *.txt or *.rst files, include them:
         '': ['*.txt', '*.rst'],
     },
 

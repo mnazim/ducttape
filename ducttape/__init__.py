@@ -2,17 +2,10 @@
 # -+- coding: utf-8 -*-
 
 """
-    .___             __    __
-  __| _/_ __   _____/  |__/  |______  ______   ____
- / __ |  |  \_/ ___\   __\   __\__  \ \____ \_/ __ \
-/ /_/ |  |  /\  \___|  |  |  |  / __ \|  |_> >  ___/
-\____ |____/  \___  >__|  |__| (____  /   __/ \___  >
-     \/           \/                \/|__|        \/
+NIH utility for generating static html pages from a bunch of Django templates
+without need to setup a full Django project.(README.rst)
 
-ducttape is a utility to generate static html pages from Django or Jinja2
-templates, mainly for the purpose of prototyping.
-
-:copyright: (C) 2013 by Mir Nazim
+:copyright: (C) 2013 Mir Nazim <hi@mirnazim.org>
 :license: MIT License (See LICENSE.txt for details)
 
 Usage:
