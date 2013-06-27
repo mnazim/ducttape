@@ -1,0 +1,23 @@
+{% extends '_base.html' %}
+{% block title %}Install {% endblock %}
+{% block main %}
+<h4>Requirements</h4>
+
+<ul>
+    {% for requirement in requirements %}
+    <li>{{ requirement }}</li>
+    {% endfor %}
+</ul>
+
+<h4>Install with pip</h4>
+<pre>
+pip install git+https://github.com/mnazim/ducttape.git
+</pre>
+
+<h4>Also</h4>
+<pre>
+git clone https://github.com/mnazim/ducttape.git
+cd ducttape
+python setup.py install
+</pre>
+{% endblock %}

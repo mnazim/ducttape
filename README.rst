@@ -7,6 +7,8 @@ without need to setup a full Django project.
 
 I created it to help me prototype my web apps using Django Template Language.
 
+Needs a unix like environment. I don't know what will happen to it on MS Windows.
+
 Installation
 ============
 
@@ -35,6 +37,10 @@ Template files go in ``templates`` directory, context data for templates goes
 inside ``context`` directory(e.g, ``context/users/profile.json`` is the
 context for ``templates/users/profile.html``). Generated html files are stored
 ``output`` directory. ``static`` directory is for js, css, images, etc.
+
+If you have a ``context/global.json`` file, it will be available as context for
+all templates. Values from ``global.json`` can be overridden from per template
+contexts.
 
 STATIC_URL, set to ``/static/`` and MEDIA_URL, set to ``/static/media/`` are
 available inside templates automatically.

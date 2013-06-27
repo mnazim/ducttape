@@ -1,0 +1,57 @@
+{% extends '_base.html' %}
+{% block title %}Using {% endblock %}
+{% block main %}
+<p>Follow the commands:</p>
+<pre>
+$ mkdir ducttape-demo
+$ cd ducttape-demo
+$ ducttape init
+Initializing...
+Done
+</pre>
+<p><tt>init</tt> creates directory structure:</p>
+<pre>
+(ducttape)$ ls
+context  output  static  templates
+</pre>
+<p>Template files go in <tt>templates</tt> directory, context data for templates goes
+inside <tt>context</tt> directory(e.g, <tt>context/users/profile.json</tt> is the
+context for <tt>templates/users/profile.html</tt>). Generated html files are stored
+<tt>output</tt> directory. <tt>static</tt> directory is for js, css, images, etc.</p>
+<p>STATIC_URL, set to <tt>/static/</tt> and MEDIA_URL, set to <tt>/static/media/</tt> are
+available inside templates automatically.</p>
+<p><tt>watch</tt> monitors template files for changes and automatically rebuilds site as
+needed:</p>
+<pre>
+$ ducttape watch
+Watching...
+Building...
+    article.html -&gt; output/article.html
+    index.html -&gt; output/index.html
+    users/mirnazim.html -&gt; output/users/mirnazim.html
+    users/index.html -&gt; output/users/index.html
+Done
+</pre>
+<p><tt>export</tt> exports the generated output to a zipfile named <tt>output.zip</tt>:</p>
+<pre>
+$ ducttape export
+Building...
+    article.html -&gt; output/article.html
+    index.html -&gt; output/index.html
+    users/mirnazim.html -&gt; output/users/mirnazim.html
+    users/index.html -&gt; output/users/index.html
+Done
+Creating zip archive...
+Done
+</pre>
+<p>That's it. No configuration; only convention(for now, at least). Wait...</p>
+<p>Yes, to serve the generated html files just use the SimpleHTTPServer:</p>
+<pre>
+$ cd output
+$ python -m SimpleHTTPServer
+</pre>
+<p>Or for Python3:</p>
+<pre>
+$ python3 -m http.serve
+</pre>
+{% endblock %}

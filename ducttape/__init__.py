@@ -16,7 +16,7 @@ Usage:
 
 import os
 import sys
-import subprocess
+import codecs
 import datetime
 import time
 import zipfile
@@ -27,7 +27,6 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
 from django.conf import settings as django_settings
-from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 from django.template.loader import render_to_string
 
 __version__ = '0.1a1'
@@ -69,24 +68,34 @@ class ChangeHandler(FileSystemEventHandler):
 
 class Page(object):
     def __init__(self, dirname, filename, ext):
-        settings = _load_settings()
+        self.settings = _load_settings()
         self.dirname = dirname
         self.filename = filename
         self.ext = ext
         self.template_path = os.path.join(self.dirname, self.filename + self.ext)
-        self.context_path = os.path.join(settings.get('context_dir', 'context'), self.dirname, self.filename + '.json')
-        self.output_path = os.path.join(settings.get('output_dir', 'output'), self.dirname, self.filename + self.ext)
+        self.context_path = os.path.join(self.settings.get('context_dir', 'context'), self.dirname, self.filename + '.json')
+        self.output_path = os.path.join(self.settings.get('output_dir', 'output'), self.dirname, self.filename + self.ext)
         self.context = self._get_context()
 
     def _get_context(self):
         global GLOBAL_CONTEXT
         context = {}
+        context.update(GLOBAL_CONTEXT)
+        # This is user specified global context, GLOBAL_CONTEXT is different
+        global_context = os.path.join(self.settings.get('context_dir'), 'global.json')
+        try:
+            if os.path.exists(global_context) and os.path.isfile(global_context):
+                _c = codecs.open(global_context).read()
+                if _c.strip():
+                    context.update(json.loads(_c))
+        except ValueError:
+            print("{file} does not contain valid json".format(file=global_context))
+
         try:
             if os.path.exists(self.context_path) and os.path.isfile(self.context_path):
-                _c = open(self.context_path).read()
+                _c = codecs.open(self.context_path ).read()
                 if _c.strip():
-                    context = json.loads(_c)
-                    context.update(GLOBAL_CONTEXT)
+                    context.update(json.loads(_c))
         except ValueError:
             print("{file} does not contain valid json".format(file=self.context_path))
 
@@ -98,13 +107,13 @@ class Page(object):
 
     def build(self):
         print "    {src} -> {out}".format(src=self.template_path, out=self.output_path)
-        html = render_to_string(self.template_path, self.context)
+        html = (render_to_string(self.template_path, self.context))
         try:
             os.makedirs(os.path.dirname(self.output_path))
         except OSError:
             pass
 
-        with open(self.output_path, 'w') as f:
+        with codecs.open(self.output_path, 'w+', encoding='utf-8') as f:
             f.write(html)
 
 

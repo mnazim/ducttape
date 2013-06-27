@@ -1,0 +1,4 @@
+{
+    "heading": "Installing ducttape",
+    "requirements": ["Django", "watchdog"]
+}
